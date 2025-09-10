@@ -75,6 +75,15 @@
                                                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
                                                 </div>
                                             </div>
+
+                                            <div class="form-group col-md-12 col-sm-12">
+                                                <label for="status">Status</label>
+                                                <select name="status" id="status" class="form-control">
+                                                    <option value="0">Pending</option>
+                                                    <option value="1">Active</option>
+                                                    <option value="2">Non aktif</option>
+                                                </select>
+                                            </div>
                                             
                                             <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4" style="float: right">Save</button>
                                         </form>
@@ -93,6 +102,7 @@
                                     <th>Sl</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Status</th>
                                     <th>Roles</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -103,6 +113,15 @@
                                     <td>{{ $loop->index+1 }}</td>
                                     <td>{{ $admin->name }}</td>
                                     <td>{{ $admin->email }}</td>
+                                    <td>
+                                        @if($admin->status == 0)
+                                            <span class="badge bg-warning">Pending</span>
+                                        @elseif($admin->status == 1)
+                                            <span class="badge bg-success">Active</span>
+                                        @elseif($admin->status == 2)
+                                            <span class="badge bg-danger">Non aktif</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         @foreach ($admin->roles as $role)
                                             <span class="badge bg-info mr-1">
@@ -164,6 +183,15 @@
                                                                     <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required value="{{ $admin->username }}">
                                                                 </div>
                                                             </div>
+                                                            <div class="form-group col-md-12 col-sm-12">
+                                                                <label for="status">Status</label>
+                                                                <select name="status" id="status" class="form-control">
+                                                                    <option value="0" {{ $admin->status == 0 ? 'selected' : '' }}>Pending</option>
+                                                                    <option value="1" {{ $admin->status == 1 ? 'selected' : '' }}>Active</option>
+                                                                    <option value="2" {{ $admin->status == 2 ? 'selected' : '' }}>Non aktif</option>
+                                                                </select>
+                                                            </div>
+
                                     
                                                             <button type="submit" class="btn btn-primary mt-4 pr-4 pl-4" style="float: right">Save</button>
                                                         </form>
@@ -176,7 +204,7 @@
                                         @if (Auth::guard('admin')->user()->can('admin.delete'))
                                         <a class="btn btn-danger text-white" href="{{ route('admin.admins.destroy', $admin->id) }}"
                                         onclick="event.preventDefault(); document.getElementById('delete-form-{{ $admin->id }}').submit();">
-                                        <i class="fa fa-trash-o"></i>
+                                        <i class="fa fa-trash"></i>
                                         </a>
                                         <form id="delete-form-{{ $admin->id }}" action="{{ route('admin.admins.destroy', $admin->id) }}" method="POST" style="display: none;">
                                             @method('DELETE')

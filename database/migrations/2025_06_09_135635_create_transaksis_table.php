@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('foto_deviasis', function (Blueprint $table) {
+        Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_spip');
-            $table->string('foto');
+            $table->integer('masseur_id');
+            $table->integer('user_order_id');
+            $table->dateTime('tanggal_waktu');
+            $table->string('invoice_id');
+            $table->string('total');
+            $table->longText('alamat');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('foto_deviasis');
+        Schema::dropIfExists('transaksis');
     }
 };

@@ -101,6 +101,7 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
             'Spatie\\Ignition\\' => 16,
             'Spatie\\FlareClient\\' => 19,
             'Spatie\\Backtrace\\' => 17,
+            'SnapBi\\' => 7,
             'Sabberworm\\CSS\\' => 15,
         ),
         'R' => 
@@ -131,6 +132,7 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         array (
             'Monolog\\' => 8,
             'Mockery\\' => 8,
+            'Midtrans\\' => 9,
             'Matrix\\' => 7,
             'Masterminds\\' => 12,
             'Maatwebsite\\Excel\\' => 18,
@@ -374,6 +376,10 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         array (
             0 => __DIR__ . '/..' . '/spatie/backtrace/src',
         ),
+        'SnapBi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/midtrans/midtrans-php/SnapBi',
+        ),
         'Sabberworm\\CSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
@@ -446,6 +452,10 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         'Mockery\\' => 
         array (
             0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
+        ),
+        'Midtrans\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans',
         ),
         'Matrix\\' => 
         array (
@@ -635,6 +645,7 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\Auth\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerificationController.php',
         'App\\Http\\Controllers\\Backend\\AdminsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/AdminsController.php',
+        'App\\Http\\Controllers\\Backend\\ArticleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/ArticleController.php',
         'App\\Http\\Controllers\\Backend\\Auth\\ConfirmPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/Auth/ConfirmPasswordController.php',
         'App\\Http\\Controllers\\Backend\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Backend\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/Auth/LoginController.php',
@@ -643,6 +654,8 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         'App\\Http\\Controllers\\Backend\\MateriController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/MateriController.php',
         'App\\Http\\Controllers\\Backend\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/RolesController.php',
         'App\\Http\\Controllers\\Backend\\SpipController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/SpipController.php',
+        'App\\Http\\Controllers\\Backend\\TopicController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/TopicController.php',
+        'App\\Http\\Controllers\\Backend\\TransaksiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/TransaksiController.php',
         'App\\Http\\Controllers\\Backend\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/Backend/UsersController.php',
         'App\\Http\\Controllers\\BerandaController' => __DIR__ . '/../..' . '/app/Http/Controllers/BerandaController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
@@ -658,7 +671,11 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Mail\\ReminderMail' => __DIR__ . '/../..' . '/app/Mail/ReminderMail.php',
         'App\\Models\\Admin' => __DIR__ . '/../..' . '/app/Models/Admin.php',
+        'App\\Models\\Article' => __DIR__ . '/../..' . '/app/Models/Article.php',
+        'App\\Models\\FotoDeviasi' => __DIR__ . '/../..' . '/app/Models/FotoDeviasi.php',
         'App\\Models\\Spip' => __DIR__ . '/../..' . '/app/Models/Spip.php',
+        'App\\Models\\Topic' => __DIR__ . '/../..' . '/app/Models/Topic.php',
+        'App\\Models\\Transaksi' => __DIR__ . '/../..' . '/app/Models/Transaksi.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -3931,6 +3948,14 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         'Matrix\\Operators\\Multiplication' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Multiplication.php',
         'Matrix\\Operators\\Operator' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Operator.php',
         'Matrix\\Operators\\Subtraction' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Subtraction.php',
+        'Midtrans\\ApiRequestor' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/ApiRequestor.php',
+        'Midtrans\\Config' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/Config.php',
+        'Midtrans\\CoreApi' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/CoreApi.php',
+        'Midtrans\\Notification' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/Notification.php',
+        'Midtrans\\Sanitizer' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/Sanitizer.php',
+        'Midtrans\\Snap' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/Snap.php',
+        'Midtrans\\SnapApiRequestor' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/SnapApiRequestor.php',
+        'Midtrans\\Transaction' => __DIR__ . '/..' . '/midtrans/midtrans-php/Midtrans/Transaction.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
@@ -6590,6 +6615,9 @@ class ComposerStaticInitf2317af8ed743d1c82771e374136b87f
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'SnapBi\\SnapBi' => __DIR__ . '/..' . '/midtrans/midtrans-php/SnapBi/SnapBi.php',
+        'SnapBi\\SnapBiApiRequestor' => __DIR__ . '/..' . '/midtrans/midtrans-php/SnapBi/SnapBiApiRequestor.php',
+        'SnapBi\\SnapBiConfig' => __DIR__ . '/..' . '/midtrans/midtrans-php/SnapBi/SnapBiConfig.php',
         'Spatie\\Backtrace\\Arguments\\ArgumentReducers' => __DIR__ . '/..' . '/spatie/backtrace/src/Arguments/ArgumentReducers.php',
         'Spatie\\Backtrace\\Arguments\\ProvidedArgument' => __DIR__ . '/..' . '/spatie/backtrace/src/Arguments/ProvidedArgument.php',
         'Spatie\\Backtrace\\Arguments\\ReduceArgumentPayloadAction' => __DIR__ . '/..' . '/spatie/backtrace/src/Arguments/ReduceArgumentPayloadAction.php',

@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '1408b6c5a27b65d7cf7cc3999d56a92fa8aef715',
+        'reference' => 'dcbe247ebe68bff322ec4ed5d5b63dce3e5baad2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -427,7 +427,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '1408b6c5a27b65d7cf7cc3999d56a92fa8aef715',
+            'reference' => 'dcbe247ebe68bff322ec4ed5d5b63dce3e5baad2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -574,6 +574,15 @@
             'reference' => 'f5ac2c0b0a2eefca70b2ce32a5809992227e75a6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../masterminds/html5',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'midtrans/midtrans-php' => array(
+            'pretty_version' => '2.6.2',
+            'version' => '2.6.2.0',
+            'reference' => '8ed7fc58ff1ababe675da17acf8233f4028eb3be',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../midtrans/midtrans-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -856,8 +865,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '3.0.0',
-                1 => '1.0|2.0|3.0',
+                0 => '1.0|2.0|3.0',
+                1 => '3.0.0',
             ),
         ),
         'psr/simple-cache' => array(

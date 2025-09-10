@@ -6,7 +6,7 @@
 
 
     .menu-inner {
-        background: #3da601;
+        background: #EE4D2D;
     } 
     .menu-vertical .menu-item .menu-link {
         color: white    
@@ -19,8 +19,8 @@
             {{-- <span class="app-brand-logo demo">
 
       </span> --}}
-            <img src="{{ asset('assets/img/logos/logo.png') }}" style="max-width: 40%">
-            <span class=" demo fw-bold ms-2" style="color: white">Dashboard</span>
+            <img src="{{ asset('assets/img/logos/logo-study-english.webp') }}" style="max-width: 40%">
+            <span class=" demo fw-bold ms-2" style="color: black">Study English</span>
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -35,26 +35,32 @@
 
     @endphp
 
-    <div class="menu-inner-shadow" style="background: #3da601!Important"></div>
+    <div class="menu-inner-shadow" style="background: #EE4D2D!Important"></div>
 
     <ul class="menu-inner py-1">
-        @php
-            $arr_side = [
-                'Sarana',
-                'Prasarana',
-                'Instalasi',
-                'Peralatan',
-            ]
-        @endphp
-
-        @foreach ($arr_side as $item)    
             <li class="menu-item mb-2">
-                <a href="{{ route('spip') }}?type={{ $item }}" class="menu-link">
+                <a href="{{ route('admin.dashboard') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                    <div data-i18n="{{ $item }}">{{ $item }}</div>
+                    <div data-i18n="dashboard">Beranda</div>
                 </a>
             </li>
-        @endforeach
+
+            @if ($usr->can('topic.view'))
+            <li class="menu-item mb-2">
+                <a href="{{ route('topic') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Topic">Topic</div>
+                </a>
+            </li>
+            @endif
+            @if ($usr->can('article.view'))
+            <li class="menu-item mb-2">
+                <a href="{{ route('article') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Article">Article</div>
+                </a>
+            </li>
+            @endif
 
             @if ($usr->can('admin.view') || $usr->can('role.view'))
                 <li
@@ -68,7 +74,14 @@
                         <li class="menu-item {{ Request::routeIs('admin/admins') ? 'active' : '' }}">
                             <a href="{{ route('admin.admins.index') }}" class="menu-link">
                                 <div data-i18n="Without menu"
-                                    style="color : {{ Request::routeIs('admin/admins') ? '#3da601' : '' }}">Users
+                                    style="color : {{ Request::routeIs('admin/admins') ? '#EE4D2D' : '' }}">Users
+                                </div>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ Request::routeIs('admin/roles') ? 'active' : '' }}">
+                            <a href="{{ route('admin.roles.index') }}" class="menu-link">
+                                <div data-i18n="Without menu"
+                                    style="color : {{ Request::routeIs('admin/roles') ? '#EE4D2D' : '' }}">Role
                                 </div>
                             </a>
                         </li>

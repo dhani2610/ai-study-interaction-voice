@@ -167,7 +167,7 @@
                                                     </a>
                                                     <a onclick="confirmDelete('{{ route('spip.destroy', $spip->id) }}?type={{ Request::get('type') }}')"
                                                         class="btn btn-danger text-white">
-                                                        <i class="fa-solid fa-trash"></i>
+                                                        <i class="fa fa-trash"></i>
                                                     </a>
                                                 @else
                                                     -

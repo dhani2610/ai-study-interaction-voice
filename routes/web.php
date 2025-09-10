@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,16 +35,34 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
     Route::resource('admins', 'Backend\AdminsController', ['names' => 'admin.admins']);
 
+    Route::get('tcall', 'Backend\AdminsController@tcall')->name('tcall');
+    Route::get('transaksi', 'Backend\TransaksiController@index')->name('transaksi');
 
-    Route::group(['prefix' => 'spip'], function () {
-        Route::get('/', 'Backend\SpipController@index')->name('spip');
-        Route::get('send-reminder/{id}', 'Backend\SpipController@sendEmail')->name('spip.mail.reminder');
-        Route::get('create', 'Backend\SpipController@create')->name('spip.create');
-        Route::post('store', 'Backend\SpipController@store')->name('spip.store');
-        Route::get('edit/{id}', 'Backend\SpipController@edit')->name('spip.edit');
-        Route::post('update/{id}', 'Backend\SpipController@update')->name('spip.update');
-        Route::get('destroy/{id}', 'Backend\SpipController@destroy')->name('spip.destroy');
+    Route::post('/midtrans/token', [TransaksiController::class, 'getSnapToken'])->name('midtrans.token');
+    Route::post('/booking/checkout', [TransaksiController::class, 'store'])->name('booking.store');
+
+    Route::group(['prefix' => 'topic'], function () {
+        Route::get('/', 'Backend\TopicController@index')->name('topic');
+        Route::get('create', 'Backend\TopicController@create')->name('topic.create');
+        Route::post('store', 'Backend\TopicController@store')->name('topic.store');
+        Route::get('edit/{id}', 'Backend\TopicController@edit')->name('topic.edit');
+        Route::post('update/{id}', 'Backend\TopicController@update')->name('topic.update');
+        Route::get('destroy/{id}', 'Backend\TopicController@destroy')->name('topic.destroy');
     });
+
+    Route::group(['prefix' => 'article'], function () {
+        Route::get('/', 'Backend\ArticleController@index')->name('article');
+        Route::get('/search-article', 'Backend\ArticleController@indexArticle')->name('search-article');
+        Route::get('/proses-search-article', 'Backend\ArticleController@search')->name('proses-search-article');
+        Route::get('/call', 'Backend\ArticleController@indexArticle')->name('call');
+
+        Route::get('create', 'Backend\ArticleController@create')->name('article.create');
+        Route::post('store', 'Backend\ArticleController@store')->name('article.store');
+        Route::get('edit/{id}', 'Backend\ArticleController@edit')->name('article.edit');
+        Route::post('update/{id}', 'Backend\ArticleController@update')->name('article.update');
+        Route::get('destroy/{id}', 'Backend\ArticleController@destroy')->name('article.destroy');
+    });
+
 
     // Login Routes
     Route::get('/login', 'Backend\Auth\LoginController@showLoginForm')->name('admin.login');

@@ -50,40 +50,40 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         // Validate Login Data
-        // dd($request->all());
         $request->validate([
             'email' => 'required|max:50',
             'password' => 'required',
         ]);
 
+        $credentials = [
+            ['email' => $request->email, 'password' => $request->password],
+            ['username' => $request->email, 'password' => $request->password]
+        ];
 
-        // Attempt to login
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
-            // Redirect to dashboard
-            $userRole = Auth::guard('admin')->user()->getRoleNames()->first(); // Get the first role name
+        foreach ($credentials as $credential) {
+            if (Auth::guard('admin')->attempt($credential, $request->remember)) {
+                $user = Auth::guard('admin')->user();
 
-            session()->flash('success', 'Successully Logged in !');
-            if ($userRole == 'superadmin') {
-                return redirect()->route('spip', ['type' => 'Sarana']);
-            } else {
-                return redirect()->route('spip', ['type' => 'Sarana']);
-            }
-        } else {
-            // Search using username
-            if (Auth::guard('admin')->attempt(['username' => $request->email, 'password' => $request->password], $request->remember)) {
-                $userRole = Auth::guard('admin')->user()->getRoleNames()->first(); // Get the first role name
-
-                session()->flash('success', 'Successully Logged in !');
-                if ($userRole == 'superadmin') {
-                    return redirect()->route('spip', ['type' => 'Sarana']);
-                } else {
-                    return redirect()->route('spip', ['type' => 'Sarana']);
+                // Cek status akun
+                if ($user->status == 0) {
+                    Auth::guard('admin')->logout();
+                    session()->flash('failed', 'Akun Anda sedang dalam proses approval oleh admin.');
+                    return back();
+                } elseif ($user->status == 2) {
+                    Auth::guard('admin')->logout();
+                    session()->flash('error', 'Akun Anda telah dinonaktifkan oleh admin.');
+                    return back();
+                } elseif ($user->status == 1) {
+                    $userRole = $user->getRoleNames()->first(); // Get the first role name
+                    session()->flash('success', 'Successfully Logged in!');
+                    return redirect()->route('admin.dashboard');
                 }
             }
-            // error
-            session()->flash('error', 'Invalid email and password');
-            return back();
         }
+
+        // Jika login gagal
+        session()->flash('error', 'Invalid email/username or password');
+        return back();
     }
 
     /**

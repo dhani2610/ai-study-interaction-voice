@@ -60,7 +60,7 @@
                             <a href="#" class="app-brand-link gap-2">
 
                                 <center>
-                                    <img src="{{ asset('assets/img/logos/logo.png') }}" style="max-width: 50%">
+                                    <img src="{{ asset('assets/img/logos/logo-study-english.webp') }}" style="max-width: 50%">
                                 </center>
                             </a>
                         </div>

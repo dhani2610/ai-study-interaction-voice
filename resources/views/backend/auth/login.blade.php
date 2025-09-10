@@ -15,7 +15,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logos/logo.png') }}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logos/logo-study-english.webp') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -60,7 +60,7 @@
                             <a href="#" class="app-brand-link gap-2">
 
                                 <center>
-                                    <img src="{{ asset('assets/img/logos/logo.png') }}" style="max-width: 50%">
+                                    <img src="{{ asset('assets/img/logos/logo-study-english.webp') }}" style="max-width: 50%">
                                 </center>
                             </a>
                         </div>
