@@ -156,7 +156,7 @@
         })
         .catch(err => {
             console.error(err);
-            aiBubble.innerText = "⚠️ Error, coba lagi.";
+            aiBubble.innerText = "⚠️ Error, coba lagi."+err;
         });
     }
 </script>
