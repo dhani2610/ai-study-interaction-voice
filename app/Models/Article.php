@@ -13,4 +13,8 @@ class Article extends Model
     {
         return $this->belongsTo(Topic::class, 'id_topic');
     }
+    public function user()
+    {
+        return $this->belongsTo(Admin::class, 'created_by');
+    }
 }

@@ -75,4 +75,9 @@ class Admin extends Authenticatable
         }
         return $hasPermission;
     }
+
+    public function article()
+    {
+        return $this->hasMany(Article::class, 'created_by');
+    }
 }

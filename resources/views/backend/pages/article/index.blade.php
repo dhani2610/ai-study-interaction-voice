@@ -6,8 +6,8 @@
         <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title float-left">Data Article</h4>
-                    <a href="{{ route('article.create') }}" class="btn btn-primary float-right mb-3">Tambah Article</a>
+                    <h4 class="header-title float-left">Data Materi</h4>
+                    <a href="{{ route('article.create') }}" class="btn btn-primary float-right mb-3">Tambah Materi</a>
                     <div class="clearfix"></div>
                     @include('backend.layouts.partials.messages')
                     <table class="table table-bordered" id="dataTable">

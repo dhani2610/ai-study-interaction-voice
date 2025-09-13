@@ -46,7 +46,6 @@ class ArticleController extends Controller
         ]);
 
         try {
-
             $data = new Article();
             $data->judul = $request->judul;
             $data->id_topic = $request->id_topic;

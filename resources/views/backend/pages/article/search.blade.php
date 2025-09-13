@@ -119,7 +119,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                            <div id="youtubePlayerContainer" class="mb-3 text-center"></div>
+                        <div id="youtubePlayerContainer" class="mb-3 text-center"></div>
                     </div>
                 </div>
             </div>
@@ -148,43 +148,34 @@
                     if (data.articles.length > 0) {
                         data.articles.forEach(function(article, index) {
                             html += `
-                <div class="col-md-8 col-lg-6 mb-4">
-                    <div class="card h-100 shadow-sm article-card" data-cover="${article.cover}" data-judul="${article.judul}" data-content="${encodeURIComponent(article.content)}">
-                        <img src="{{ asset('assets/img/cover_article') }}/${article.cover}" class="card-img-left" alt="cover">
-                        <div class="card-body">
-                            <h5 class="card-title">${article.judul}</h5>
-                        </div>
+                    <div class="col-md-8 col-lg-6 mb-4">
+                        <a href="{{ url('/voice-ai') }}/${article.id}" 
+                           class="text-decoration-none text-dark">
+                            <div class="card h-100 shadow-sm article-card">
+                                <img src="{{ asset('assets/img/cover_article') }}/${article.cover}" 
+                                     class="card-img-left" alt="cover">
+                                <div class="card-body">
+                                    <h5 class="card-title">${article.judul}</h5>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
                 `;
                         });
                     } else {
                         html = `<div class="col-12 text-center"><p>Tidak ada artikel ditemukan.</p></div>`;
                     }
                     $('#article_results').html(html);
-
-                    // Tambahkan event click setelah rendering selesai
-                    $('.article-card').on('click', function() {
-                        const content = decodeURIComponent($(this).data(
-                            'content')); // ini URL biasa
-                        const judul = $(this).data('judul');
-
-                        const embedUrl = convertToEmbed(content);
-                        if (embedUrl) {
-                            const iframe = `<iframe width="100%" height="400" src="${embedUrl}"
-                                    frameborder="0" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
-
-                            $('#youtubePlayerContainer').html(iframe);
-                            $('#articleModalLabel').text(judul);
-                            $('#articleModal').modal('show');
-                        } else {
-                            $('#youtubePlayerContainer').html(
-                                '<p>Video tidak valid atau tidak dikenali.</p>');
-                        }
-                    });
-
                 });
             }
+
+
+            $('.article-card').on('click', function() {
+                console.log('id');
+
+                const id = $(this).data('id'); // pastikan ada id artikel
+                window.location.href = "{{ url('/voice-ai') }}/" + id;
+            });
 
             function convertToEmbed(url) {
                 const regExp = /^.*(youtu\.be\/|youtube\.com\/(watch\?v=|embed\/|v\/|shorts\/))([^#\&\?]*).*/;

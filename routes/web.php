@@ -29,8 +29,17 @@ Route::post('/admin/register/store', 'BerandaController@registerStore')->name('a
 /**
  * Admin routes
  */
+Route::post('/voice-ai', [App\Http\Controllers\VoiceAiController::class, 'process'])->name('ai-voice');
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'Backend\DashboardController@index')->name('admin.dashboard');
+
+    // Route::get('/voice-ai/{id}', function () {
+    //     return view('backend.pages.voice-ai.index');
+    // })->name('voice.ai');
+
+    Route::get('/voice-ai/{id}', [App\Http\Controllers\VoiceAiController::class, 'index'])->name('voice.ai');
+
     Route::resource('roles', 'Backend\RolesController', ['names' => 'admin.roles']);
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
     Route::resource('admins', 'Backend\AdminsController', ['names' => 'admin.admins']);

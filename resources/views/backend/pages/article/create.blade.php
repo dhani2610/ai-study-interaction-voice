@@ -30,7 +30,7 @@
                 <div class="col-12 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="header-title text-center">{{ isset($article) ? 'Edit' : 'Tambah' }} Article</h4>
+                            <h4 class="header-title text-center">{{ isset($article) ? 'Edit' : 'Tambah' }} Materi</h4>
                             <hr>
                             <div class="form-group">
                                 <label>Judul</label>
@@ -59,13 +59,15 @@
                                 <label>Cover</label>
                                 <input type="file" name="cover" class="form-control">
                                 @if (isset($article))
-                                    <img src="{{ asset('assets/img/cover_article/' . $article->cover) }}" width="150" class="mt-2">
+                                    <img src="{{ asset('assets/img/cover_article/' . $article->cover) }}" accept="image/*" width="150" class="mt-2">
                                 @endif
                             </div>
 
                             <br>
                             <div class="form-group">
-                                <textarea name="content" class="form-control" id="content"></textarea>
+                                <label>Materi AI</label>
+                                <textarea name="content" class="form-control" rows="10"></textarea>
+                                <small class="text-danger">Materi ini bukan untuk ditampilkan ke murid, akan tetapi untuk knowladge AI</small>
                             </div>
                             
                             <button class="btn btn-primary mt-3" type="submit">Simpan</button>
