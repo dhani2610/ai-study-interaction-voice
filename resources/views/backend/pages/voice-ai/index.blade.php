@@ -131,7 +131,7 @@
     function kirimKeAI(prompt) {
         const aiBubble = addMessage("⏳ Sedang diproses...", "ai");
 
-        fetch("{{ route('ai-voice') }}", {
+        fetch("{{ url('/voice-ai/' . $article->id) }}", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
