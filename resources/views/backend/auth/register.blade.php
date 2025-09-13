@@ -60,7 +60,8 @@
                             <a href="#" class="app-brand-link gap-2">
 
                                 <center>
-                                    <img src="{{ asset('assets/img/logos/logo-study-english.webp') }}" style="max-width: 50%">
+                                    <img src="{{ asset('assets/img/logos/logo-study-english.webp') }}"
+                                        style="max-width: 50%">
                                 </center>
                             </a>
                         </div>
@@ -73,6 +74,14 @@
 
                         <form method="POST" action="{{ route('admin-register-store') }}">
                             @csrf
+                            <div class="mb-3">
+                                <label for="password">Role</label>
+                                <select name="roles[]" id="roles" class="form-control" required>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Name</label>
                                 <input type="text" class="form-control" id="name" name="name"

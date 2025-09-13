@@ -24,14 +24,24 @@ class ArticleController extends Controller
     public function index()
     {
         $data['page_title'] = 'Article';
-        $data['article'] = Article::orderBy('created_at', 'desc')->get();
+        $role = Auth::guard('admin')->user()->getRoleNames()->first();
+        if ($role != 'superadmin') {
+            $data['article'] = Article::where('created_by', $this->user->id)->orderBy('created_at', 'desc')->get();
+        } else {
+            $data['article'] = Article::orderBy('created_at', 'desc')->get();
+        }
         return view('backend.pages.article.index', $data);
     }
 
     public function create()
     {
         $data['page_title'] = 'Tambah Article';
-        $data['topics'] = Topic::all();
+        $role = Auth::guard('admin')->user()->getRoleNames()->first();
+        if ($role != 'superadmin') {
+            $data['topics'] = Topic::where('created_by', $this->user->id)->orderBy('created_at', 'desc')->get();
+        } else {
+            $data['topics'] = Topic::orderBy('created_at', 'desc')->get();
+        }
         return view('backend.pages.article.create', $data);
     }
 
@@ -74,7 +84,12 @@ class ArticleController extends Controller
     {
         $data['page_title'] = 'Edit Article';
         $data['article'] = Article::findOrFail($id);
-        $data['topics'] = Topic::all();
+        $role = Auth::guard('admin')->user()->getRoleNames()->first();
+        if ($role != 'superadmin') {
+            $data['topics'] = Topic::where('created_by', $this->user->id)->orderBy('created_at', 'desc')->get();
+        } else {
+            $data['topics'] = Topic::orderBy('created_at', 'desc')->get();
+        }
         return view('backend.pages.article.edit', $data);
     }
 

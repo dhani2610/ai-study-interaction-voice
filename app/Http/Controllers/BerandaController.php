@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class BerandaController extends Controller
 {
@@ -14,6 +15,7 @@ class BerandaController extends Controller
     public function register()
     {
         $data['page_title'] = 'Register';
+        $data['roles']  = Role::where('name','!=','superadmin')->get();
         return view('backend.auth.register', $data);
     }
 
@@ -36,7 +38,7 @@ class BerandaController extends Controller
             $admin->password = Hash::make($request->password);
             $admin->save();
 
-            $admin->assignRole('Murid');
+            $admin->assignRole($request->roles);
 
             session()->flash('success', 'Register berhasil. Akun Anda sedang menunggu validasi/approval oleh admin sebelum dapat mengakses panel.');
             return redirect('admin/login');

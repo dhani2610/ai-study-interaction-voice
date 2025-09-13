@@ -24,7 +24,12 @@ class TopicController extends Controller
     public function index(Request $request)
     {
         $data['page_title'] = 'Topic';
-        $data['topic'] = Topic::orderBy('created_at', 'desc')->get();
+        $role = Auth::guard('admin')->user()->getRoleNames()->first();
+        if ($role != 'superadmin') {
+            $data['topic'] = Topic::where('created_by', $this->user->id)->orderBy('created_at', 'desc')->get();
+        } else {
+            $data['topic'] = Topic::orderBy('created_at', 'desc')->get();
+        }
 
         return view('backend.pages.topic.index', $data);
     }
@@ -46,6 +51,7 @@ class TopicController extends Controller
         try {
             $data = new Topic();
             $data->topic = $request->topic;
+            $data->created_by = Auth::guard('admin')->user()->id;
             $data->save();
 
             session()->flash('success', 'Data Berhasil Disimpan!');
@@ -77,6 +83,7 @@ class TopicController extends Controller
         try {
             $data = Topic::find($id);
             $data->topic = $request->topic;
+            $data->created_by = Auth::guard('admin')->user()->id;
             $data->save();
 
             session()->flash('success', 'Data Berhasil Disimpan!');

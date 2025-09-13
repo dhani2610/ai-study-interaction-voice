@@ -67,7 +67,6 @@ class RolePermissionSeeder extends Seeder
                     'master.data.view',
                 ]
             ],
-         
             [
                 'group_name' => 'topic',
                 'permissions' => [
@@ -85,14 +84,7 @@ class RolePermissionSeeder extends Seeder
                     'article.edit',   
                     'article.delete',
                 ]
-            ],
-            [
-                'group_name' => 'transaksi',
-                'permissions' => [
-                    'transaksi.view',
-                ]
-            ],
-            
+            ]
         ];
 
 
