@@ -29,7 +29,7 @@ Route::post('/admin/register/store', 'BerandaController@registerStore')->name('a
 /**
  * Admin routes
  */
-Route::post('/voice-ai', [App\Http\Controllers\VoiceAiController::class, 'process'])->name('ai-voice');
+Route::post('/voice-ai/{id}', [App\Http\Controllers\VoiceAiController::class, 'process'])->name('ai-voice');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'Backend\DashboardController@index')->name('admin.dashboard');
