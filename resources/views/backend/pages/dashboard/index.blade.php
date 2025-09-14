@@ -4,7 +4,7 @@
     <style>
         /* === General Style === */
         body {
-            font-family: 'Comic Neue', cursive;
+            /* font-family: 'Comic Neue', cursive; */
         }
 
         /* Select2 Custom */

@@ -3,9 +3,9 @@
 @section('title', 'Voice AI - Admin Panel')
 
 @section('content')
-    <div class="container mt-5">
+    <div class=" mt-5">
         <div class="card shadow-lg p-4 rounded-4 border-0" style="background: #f9f9ff;">
-            <h3 class="mb-4 text-center fw-bold text-primary">🎤 Voice AI Assistant</h3>
+            <h3 class="mb-4 text-center fw-bold text-primary">🎤 AI Materi</h3>
             <h3 class="mb-4 text-center fw-bold text-primary">{{ $article->judul }}</h3>
 
             <!-- Chat Area -->
@@ -66,7 +66,7 @@
                 transcriptFinal = "";
                 recognition.start();
                 isRecording = true;
-                recordBtn.textContent = "⏹️ Stop Rekam";
+                recordBtn.textContent = "⏹️ Berhenti Rekam";
                 recordBtn.style.background = "#999";
             } else {
                 recognition.stop();
@@ -159,7 +159,7 @@
                     // 🔊 Ucapkan jawaban AI
                     window.speechSynthesis.cancel();
                     const utterance = new SpeechSynthesisUtterance(cleanText);
-                    utterance.lang = "id-ID";
+                    utterance.lang = "en-US";
                     utterance.rate = 1;
                     utterance.pitch = 1;
                     window.speechSynthesis.speak(utterance);

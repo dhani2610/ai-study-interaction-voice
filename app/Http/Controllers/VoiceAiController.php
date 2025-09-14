@@ -12,7 +12,7 @@ class VoiceAiController extends Controller
 
     public function index($id)
     {
-        $data['page_title'] = 'Voice AI Assistant';
+        $data['page_title'] = 'Asisten Suara AI';
         $data['article'] = Article::find($id);
         return view('backend.pages.voice-ai.index', $data);
     }
