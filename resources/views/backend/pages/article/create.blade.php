@@ -21,7 +21,7 @@
             margin-top: 10px!important;
         }
     </style>
-
+    @include('backend.layouts.partials.messages')
     <div class="main-content-inner">
         <div class="row">
             <form action="{{ isset($article) ? route('article.update', $article->id) : route('article.store') }}"
@@ -34,12 +34,12 @@
                             <hr>
                             <div class="form-group">
                                 <label>Judul</label>
-                                <input type="text" name="judul" class="form-control"
+                                <input type="text" required name="judul" class="form-control"
                                     value="{{ $article->judul ?? '' }}" required>
                             </div>
                             <div class="form-group">
                                 <label>Topic</label>
-                                <select name="id_topic" class="form-control" required>
+                                <select required name="id_topic" class="form-control" required>
                                     @foreach ($topics as $topic)
                                         <option value="{{ $topic->id }}"
                                             {{ isset($article) && $article->id_topic == $topic->id ? 'selected' : '' }}>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Tanggal</label>
-                                <input type="date" name="tanggal" class="form-control"
+                                <input type="date" required name="tanggal" class="form-control"
                                     value="{{ $article->tanggal ?? date('Y-m-d') }}" required>
                             </div>
                             <br>
@@ -57,7 +57,7 @@
 
                             <div class="form-group">
                                 <label>Cover</label>
-                                <input type="file" name="cover" class="form-control">
+                                <input type="file" required name="cover" class="form-control">
                                 @if (isset($article))
                                     <img src="{{ asset('assets/img/cover_article/' . $article->cover) }}" accept="image/*" width="150" class="mt-2">
                                 @endif
@@ -66,7 +66,7 @@
                             <br>
                             <div class="form-group">
                                 <label>Materi AI</label>
-                                <textarea name="content" class="form-control" rows="10"></textarea>
+                                <textarea required name="content" class="form-control" rows="10"></textarea>
                                 <small class="text-danger">Materi ini bukan untuk ditampilkan ke murid, akan tetapi untuk knowladge AI</small>
                             </div>
                             
