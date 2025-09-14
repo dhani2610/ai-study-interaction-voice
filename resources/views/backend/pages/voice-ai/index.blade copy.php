@@ -3,108 +3,173 @@
 @section('title', 'Voice AI - Admin Panel')
 
 @section('content')
-<div class="container mt-5">
-    <div class="card shadow-lg p-4 rounded-3">
-        <h3 class="mb-3 text-center">🎤 Voice AI Assistant</h3>
+    <div class=" mt-5">
+        <div class="card shadow-lg p-4 rounded-4 border-0" style="background: #f9f9ff;">
+            <h3 class="mb-4 text-center fw-bold text-primary">🎤 AI Materi</h3>
+            <h3 class="mb-4 text-center fw-bold text-primary">{{ $article->judul }}</h3>
 
-        <div class="mb-3">
-            <label class="fw-bold">Pertanyaan Murid (voice/text):</label>
-            <textarea id="userText" class="form-control" rows="3" placeholder="Klik 🎙️ lalu bicara..."></textarea>
-        </div>
+            <!-- Chat Area -->
+            <div id="chatBox" class="mb-3 p-3 rounded-3"
+                style="height: 350px; overflow-y: auto; background: #fff; border: 2px solid #eee;">
+                <div class="text-muted text-center small">👉 Klik tombol 🎙️ untuk mulai bicara</div>
+            </div>
 
-        <div class="mb-3 text-center">
-            <button id="recordBtn" class="btn btn-danger me-2">🎙️ Rekam</button>
-            <button id="sendBtn" class="btn btn-primary">🚀 Kirim ke AI</button>
-        </div>
-
-        <div class="mb-3">
-            <label class="fw-bold">Jawaban AI:</label>
-            <textarea id="aiResponse" class="form-control" rows="3" readonly></textarea>
+            <!-- Record Button -->
+            <div class="text-center">
+                <button id="recordBtn" class="btn btn-lg px-5 py-3 rounded-pill fw-bold"
+                    style="background: #ff4d6d; color: #fff; font-size: 1.2rem;">
+                    🎙️ Mulai Rekam
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const recordBtn = document.getElementById("recordBtn");
-    const sendBtn = document.getElementById("sendBtn");
-    const userText = document.getElementById("userText");
-    const aiResponse = document.getElementById("aiResponse");
+    <script>
+        const recordBtn = document.getElementById("recordBtn");
+        const chatBox = document.getElementById("chatBox");
 
-    // 🎙️ Setup SpeechRecognition
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
-    recognition.lang = "id-ID"; // ubah ke en-US kalau mau bahasa Inggris
-    recognition.continuous = false;
-    recognition.interimResults = false;
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.lang = "id-ID";
+        recognition.continuous = true; // terus rekam
+        recognition.interimResults = true; // tampilkan live preview
+        recognition.maxAlternatives = 1;
 
-    let isRecording = false;
+        let isRecording = false;
+        let transcriptFinal = "";
 
-    recordBtn.addEventListener("click", () => {
-        if (!isRecording) {
-            recognition.start();
-            isRecording = true;
-            recordBtn.textContent = "⏹️ Stop";
-        } else {
-            recognition.stop();
-            isRecording = false;
-            recordBtn.textContent = "🎙️ Rekam";
-        }
-    });
+        // Tambah bubble ke chat
+        function addMessage(text, sender = "user") {
+            const msg = document.createElement("div");
+            msg.classList.add("p-2", "mb-2", "rounded-3");
+            msg.style.maxWidth = "80%";
 
-    recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        userText.value = transcript;
-    };
+            if (sender === "user") {
+                msg.classList.add("ms-auto", "text-end");
+                msg.style.background = "#d1e7ff";
+                msg.style.color = "#000";
+            } else {
+                msg.classList.add("me-auto", "text-start");
+                msg.style.background = "#e6ffe6";
+                msg.style.color = "#000";
+            }
 
-    recognition.onerror = (event) => {
-        console.error("Recognition error:", event.error);
-        alert("⚠️ Tidak ada suara terdeteksi / error mic.");
-        isRecording = false;
-        recordBtn.textContent = "🎙️ Rekam";
-    };
-
-    recognition.onend = () => {
-        isRecording = false;
-        recordBtn.textContent = "🎙️ Rekam";
-    };
-
-    // 🚀 Kirim ke AI
-    sendBtn.addEventListener("click", () => {
-        const prompt = userText.value.trim();
-        if (prompt === "") {
-            alert("Silakan isi pertanyaan atau gunakan voice.");
-            return;
+            msg.innerText = text;
+            chatBox.appendChild(msg);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return msg;
         }
 
-        aiResponse.value = "⏳ Sedang memproses...";
+        // Tombol rekam
+        recordBtn.addEventListener("click", () => {
+            if (!isRecording) {
+                transcriptFinal = "";
+                recognition.start();
+                isRecording = true;
+                recordBtn.textContent = "⏹️ Berhenti Rekam";
+                recordBtn.style.background = "#999";
+            } else {
+                recognition.stop();
+                isRecording = false;
+                recordBtn.textContent = "🎙️ Mulai Rekam";
+                recordBtn.style.background = "#ff4d6d";
 
-        fetch("{{ route('ai-voice') }}", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": "{{ csrf_token() }}"
-            },
-            body: JSON.stringify({ prompt })
-        })
-        .then(res => res.json())
-        .then(data => {
-            // bersihkan markdown
-            let cleanText = data.reply.replace(/\*\*/g, '').replace(/\*/g, '');
+                // Hapus bubble preview
+                const previewEl = document.getElementById("previewText");
+                if (previewEl) previewEl.remove();
 
-            aiResponse.value = cleanText;
-
-            // 🔊 Convert jawaban AI ke suara
-            window.speechSynthesis.cancel(); // clear suara sebelumnya
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = "id-ID"; // ubah ke en-US jika AI balas bahasa Inggris
-            utterance.rate = 1; // kecepatan normal
-            utterance.pitch = 1; // nada normal
-            window.speechSynthesis.speak(utterance);
-        })
-        .catch(err => {
-            console.error(err);
-            aiResponse.value = "⚠️ Error, coba lagi.";
+                // Kalau ada hasil rekaman, kirim ke AI
+                if (transcriptFinal.trim() !== "") {
+                    addMessage(transcriptFinal, "user");
+                    kirimKeAI(transcriptFinal);
+                }
+            }
         });
-    });
-</script>
+
+        // Tampilkan hasil rekaman realtime
+        recognition.onresult = (event) => {
+            let interimTranscript = "";
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    // ganti cara simpan final transcript biar nggak dobel
+                    transcriptFinal = transcriptFinal.trim() + " " + event.results[i][0].transcript.trim();
+                    // hapus kata berulang (contoh: "halo halo" -> "halo")
+                    transcriptFinal = transcriptFinal.replace(/\b(\w+)( \1\b)+/gi, "$1");
+                } else {
+                    interimTranscript = event.results[i][0].transcript;
+                }
+            }
+
+            // Preview teks sementara
+            let previewEl = document.getElementById("previewText");
+            if (!previewEl) {
+                previewEl = document.createElement("div");
+                previewEl.id = "previewText";
+                previewEl.classList.add("p-2", "mb-2", "rounded-3", "ms-auto", "text-end");
+                previewEl.style.maxWidth = "80%";
+                previewEl.style.background = "#f0f0f0";
+                previewEl.style.color = "#555";
+                chatBox.appendChild(previewEl);
+            }
+
+            // gabung final + interim
+            let previewText = (transcriptFinal + " " + interimTranscript).trim();
+            // bersihin duplikat di preview
+            previewText = previewText.replace(/\b(\w+)( \1\b)+/gi, "$1");
+
+            previewEl.innerText = previewText;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        };
+
+
+        // Restart otomatis kalau stop sendiri
+        recognition.onend = () => {
+            if (isRecording) {
+                recognition.start();
+            }
+        };
+
+        recognition.onerror = (event) => {
+            console.error("Recognition error:", event.error);
+            alert("⚠️ Error mic atau tidak ada suara.");
+            isRecording = false;
+            recordBtn.textContent = "🎙️ Mulai Rekam";
+            recordBtn.style.background = "#ff4d6d";
+        };
+
+        // Kirim prompt ke AI
+        function kirimKeAI(prompt) {
+            const aiBubble = addMessage("⏳ Sedang diproses...", "ai");
+
+            fetch("{{ url('/voice-ai/' . $article->id) }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        prompt
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    let cleanText = data.reply.replace(/\*\*/g, '').replace(/\*/g, '');
+                    aiBubble.innerText = cleanText;
+
+                    // 🔊 Ucapkan jawaban AI
+                    window.speechSynthesis.cancel();
+                    const utterance = new SpeechSynthesisUtterance(cleanText);
+                    utterance.lang = "id-ID";
+                    utterance.rate = 1;
+                    utterance.pitch = 1;
+                    window.speechSynthesis.speak(utterance);
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(err => {
+                    console.error(err);
+                    aiBubble.innerText = "⚠️ Error, coba lagi.";
+                });
+        }
+    </script>
 @endsection

@@ -31,14 +31,13 @@
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         const recognition = new SpeechRecognition();
         recognition.lang = "id-ID";
-        recognition.continuous = true; // terus rekam
-        recognition.interimResults = true; // tampilkan live preview
+        recognition.continuous = true;
+        recognition.interimResults = true;
         recognition.maxAlternatives = 1;
 
         let isRecording = false;
         let transcriptFinal = "";
 
-        // Tambah bubble ke chat
         function addMessage(text, sender = "user") {
             const msg = document.createElement("div");
             msg.classList.add("p-2", "mb-2", "rounded-3");
@@ -74,11 +73,9 @@
                 recordBtn.textContent = "🎙️ Mulai Rekam";
                 recordBtn.style.background = "#ff4d6d";
 
-                // Hapus bubble preview
                 const previewEl = document.getElementById("previewText");
                 if (previewEl) previewEl.remove();
 
-                // Kalau ada hasil rekaman, kirim ke AI
                 if (transcriptFinal.trim() !== "") {
                     addMessage(transcriptFinal, "user");
                     kirimKeAI(transcriptFinal);
@@ -86,21 +83,17 @@
             }
         });
 
-        // Tampilkan hasil rekaman realtime
         recognition.onresult = (event) => {
             let interimTranscript = "";
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    // ganti cara simpan final transcript biar nggak dobel
                     transcriptFinal = transcriptFinal.trim() + " " + event.results[i][0].transcript.trim();
-                    // hapus kata berulang (contoh: "halo halo" -> "halo")
                     transcriptFinal = transcriptFinal.replace(/\b(\w+)( \1\b)+/gi, "$1");
                 } else {
                     interimTranscript = event.results[i][0].transcript;
                 }
             }
 
-            // Preview teks sementara
             let previewEl = document.getElementById("previewText");
             if (!previewEl) {
                 previewEl = document.createElement("div");
@@ -112,17 +105,13 @@
                 chatBox.appendChild(previewEl);
             }
 
-            // gabung final + interim
             let previewText = (transcriptFinal + " " + interimTranscript).trim();
-            // bersihin duplikat di preview
             previewText = previewText.replace(/\b(\w+)( \1\b)+/gi, "$1");
 
             previewEl.innerText = previewText;
             chatBox.scrollTop = chatBox.scrollHeight;
         };
 
-
-        // Restart otomatis kalau stop sendiri
         recognition.onend = () => {
             if (isRecording) {
                 recognition.start();
@@ -136,6 +125,30 @@
             recordBtn.textContent = "🎙️ Mulai Rekam";
             recordBtn.style.background = "#ff4d6d";
         };
+
+        // 🔊 Fungsi bicara multi bahasa
+        function speakMultiLang(text) {
+            window.speechSynthesis.cancel();
+
+            // Bagi per baris atau titik
+            const parts = text.split(/\n|\. /);
+
+            for (let part of parts) {
+                if (!part.trim()) continue;
+                const utterance = new SpeechSynthesisUtterance(part.trim());
+
+                // Deteksi kasar: kalau mayoritas hurufnya A-Z → English
+                if (/^[a-zA-Z\s]+$/.test(part.trim())) {
+                    utterance.lang = "en-US";
+                } else {
+                    utterance.lang = "id-ID";
+                }
+
+                utterance.rate = 1;
+                utterance.pitch = 1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
 
         // Kirim prompt ke AI
         function kirimKeAI(prompt) {
@@ -156,13 +169,8 @@
                     let cleanText = data.reply.replace(/\*\*/g, '').replace(/\*/g, '');
                     aiBubble.innerText = cleanText;
 
-                    // 🔊 Ucapkan jawaban AI
-                    window.speechSynthesis.cancel();
-                    const utterance = new SpeechSynthesisUtterance(cleanText);
-                    utterance.lang = "en-US";
-                    utterance.rate = 1;
-                    utterance.pitch = 1;
-                    window.speechSynthesis.speak(utterance);
+                    // 🔊 Baca jawaban AI dengan multi bahasa
+                    speakMultiLang(cleanText);
 
                     chatBox.scrollTop = chatBox.scrollHeight;
                 })
