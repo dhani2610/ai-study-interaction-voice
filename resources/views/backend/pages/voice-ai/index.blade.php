@@ -159,7 +159,7 @@
                     // 🔊 Ucapkan jawaban AI
                     window.speechSynthesis.cancel();
                     const utterance = new SpeechSynthesisUtterance(cleanText);
-                    utterance.lang = "id-ID";
+                    utterance.lang = "en-US";
                     utterance.rate = 1;
                     utterance.pitch = 1;
                     window.speechSynthesis.speak(utterance);
