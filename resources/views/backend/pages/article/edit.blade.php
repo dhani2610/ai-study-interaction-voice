@@ -56,7 +56,7 @@
 
                             <div class="form-group">
                                 <label>Cover</label>
-                                <input type="file" required name="cover" class="form-control">
+                                <input type="file" name="cover" class="form-control">
                                 @if (isset($article))
                                     <img src="{{ asset('assets/img/cover_article/' . $article->cover) }}" width="150"
                                         class="mt-2">
