@@ -5,10 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class VoiceAiController extends Controller
 {
+    public $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::guard('admin')->check() == null) {
+                return redirect()->route('admin.login');
+            }
+            $this->user = Auth::guard('admin')->user();
+            return $next($request);
+        });
+    }
 
     public function index($id)
     {

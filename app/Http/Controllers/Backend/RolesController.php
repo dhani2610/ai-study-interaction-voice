@@ -14,10 +14,12 @@ class RolesController extends Controller
 {
     public $user;
 
-
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
+            if (Auth::guard('admin')->check() == null) {
+                return redirect()->route('admin.login');
+            }
             $this->user = Auth::guard('admin')->user();
             return $next($request);
         });
