@@ -44,12 +44,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('users', 'Backend\UsersController', ['names' => 'admin.users']);
     Route::resource('admins', 'Backend\AdminsController', ['names' => 'admin.admins']);
 
-    Route::get('tcall', 'Backend\AdminsController@tcall')->name('tcall');
-    Route::get('transaksi', 'Backend\TransaksiController@index')->name('transaksi');
-
-    Route::post('/midtrans/token', [TransaksiController::class, 'getSnapToken'])->name('midtrans.token');
-    Route::post('/booking/checkout', [TransaksiController::class, 'store'])->name('booking.store');
-
     Route::group(['prefix' => 'topic'], function () {
         Route::get('/', 'Backend\TopicController@index')->name('topic');
         Route::get('create', 'Backend\TopicController@create')->name('topic.create');
